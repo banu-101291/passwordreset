@@ -48,13 +48,15 @@ export async function registerUser(credentials){
          password:credentials.password,
          profile:credentials.profile
       }).catch((err)=>console.log(err))  
+      const response = data
       let {username,email} = credentials
 
-      if(status === 201){
+
+      if(response.status === 201){
                 await axios.post('https://passwordreset-8w1o.onrender.com/api/registerMail', { username, userEmail : email, text : data.msg })
             }
       
-      if(status!==201){
+      if(response.status !== 201){
          return console.log("unexpected error occured")
       }
       return Promise.resolve(data.msg)
