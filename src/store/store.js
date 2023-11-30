@@ -1,21 +1,9 @@
-import { Navigate } from "react-router-dom";
+import create from 'zustand';
 
-
-export const AuthorizeUser = ({ children }) => {
-    const token = localStorage.getItem('token');
-
-    if(!token){
-        return <Navigate to={'/'} replace={true}></Navigate>
-    }
-
-    return children;
-}
-
-
-export const ProtectRoute = ({ children }) => {
-    const username = localStorage.getItem('username')
-    if(!username){
-        return <Navigate to={'/'} replace={true}></Navigate>
-    }
-    return children;
-}
+export const useAuthStore = create((set) => ({
+    auth : {
+        username : '',
+        active : false
+    },
+    setUsername : (name) => set((state) => ({ auth : { ...state.auth, username : name }})) 
+}))
